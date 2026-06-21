@@ -1,4 +1,6 @@
 import { useState } from "react";
+import CustumerForm from "./components/custumerForm/CustumerForm";
+import ClientList from "./components/listaClientes/ClientList";
 import "./App.css";
 
 export type Client = {
@@ -24,7 +26,8 @@ function App() {
     <>
       <h1>Controle de Dívidas</h1>
 
-      {/* Componentes a serem adicionados aqui */}
+      <CustumerForm onAddClient={addClient} />
+      <ClientList clients={clients} />
     </>
   );
 }

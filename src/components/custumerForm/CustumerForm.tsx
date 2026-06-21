@@ -2,7 +2,7 @@ type Props = {
   onAddClient: (name: string, value: number) => void;
 };
 
-const CostumerForm = ({ onAddClient }: Props) => {
+const CustumerForm = ({ onAddClient }: Props) => {
   return (
     <>
       <input placeholder="Nome" />
@@ -12,4 +12,4 @@ const CostumerForm = ({ onAddClient }: Props) => {
   );
 };
 
-export default CostumerForm; 
+export default CustumerForm; 
