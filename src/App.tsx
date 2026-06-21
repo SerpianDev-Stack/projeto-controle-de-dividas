@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 
-type Client = {
+export type Client = {
   id: number;
   name: string;
   value: number;
