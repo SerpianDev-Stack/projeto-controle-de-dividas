@@ -32,6 +32,10 @@ function App() {
     });
   };
 
+  const deleteClient = (id: number) => {
+    setClients((prev) => prev.filter((client) => client.id !== id));
+  };
+
   console.log(clients);
 
   return (
@@ -39,7 +43,7 @@ function App() {
       <h1>Controle de Dívidas</h1>
 
       <CustumerForm onAddClient={addClient} />
-      <ClientList clients={clients} onMarkAsPaid={markAsPaid} />
+      <ClientList clients={clients} onMarkAsPaid={markAsPaid} onDeleteClient={deleteClient} />
     </>
   );
 }

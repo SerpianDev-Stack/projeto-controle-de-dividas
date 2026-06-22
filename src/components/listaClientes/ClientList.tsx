@@ -3,12 +3,13 @@ import type { Client } from "../../App";
 type Props = {
   clients: Client[];
   onMarkAsPaid: (id: number) => void;
+  onDeleteClient: (id: number) => void;
 };
 
-const ClientList = ({ clients, onMarkAsPaid }: Props) => {
+const ClientList = ({ clients, onMarkAsPaid, onDeleteClient }: Props) => {
   const pendingClients = clients.filter((client) => !client.paid);
   const paidClients = clients.filter((client) => client.paid);
-  
+
   return (
     <>
       <h2>Clientes Pendentes</h2>
@@ -17,9 +18,14 @@ const ClientList = ({ clients, onMarkAsPaid }: Props) => {
           <li key={client.id}>
             {client.name} - R$ {client.value}
             {!client.paid && (
-              <button onClick={() => onMarkAsPaid(client.id)}>
-                Marcar como pago
-              </button>
+              <div>
+                <button onClick={() => onMarkAsPaid(client.id)}>
+                  Marcar como pago
+                </button>
+                <button onClick={() => onDeleteClient(client.id)}>
+                  Excluir
+                </button>
+              </div>
             )}
           </li>
         ))}
@@ -31,6 +37,7 @@ const ClientList = ({ clients, onMarkAsPaid }: Props) => {
         {paidClients.map((client) => (
           <li key={client.id}>
             {client.name} - R$ {client.value}
+            <button onClick={() => onDeleteClient(client.id)}>Excluir</button>
           </li>
         ))}
       </ul>
