@@ -7,6 +7,7 @@ export type Client = {
   id: number;
   name: string;
   value: number;
+  paid: boolean;
 };
 
 function App() {
@@ -17,17 +18,28 @@ function App() {
       id: Date.now(),
       name,
       value,
+      paid: false,
     };
 
     setClients((prev) => [...prev, newClient]);
   };
+
+  const markAsPaid = (id: number) => {
+    setClients((prev) => {
+      return prev.map((client) =>
+        client.id === id ? { ...client, paid: true } : client,
+      );
+    });
+  };
+
+  console.log(clients);
 
   return (
     <>
       <h1>Controle de Dívidas</h1>
 
       <CustumerForm onAddClient={addClient} />
-      <ClientList clients={clients} />
+      <ClientList clients={clients} onMarkAsPaid={markAsPaid} />
     </>
   );
 }
