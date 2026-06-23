@@ -44,6 +44,20 @@ function App() {
     );
   };
 
+  const totalPending = clients.reduce((acc, client) => {
+    if (!client.paid) {
+      return acc + client.value;
+    }
+    return acc;
+  }, 0);
+
+  const totalPaid = clients.reduce((acc, client) => {
+    if (client.paid) {
+      return acc + client.value;
+    }
+    return acc;
+  }, 0);
+
   console.log(clients);
 
   return (
@@ -57,6 +71,8 @@ function App() {
         onDeleteClient={deleteClient}
         onUpdateValue={updateClientValue}
       />
+      <h2>Total a receber: R$ {totalPending.toFixed(2)}</h2>
+      <h2>Total recebido: R$ {totalPaid.toFixed(2)}</h2>
     </>
   );
 }
