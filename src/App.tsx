@@ -36,6 +36,14 @@ function App() {
     setClients((prev) => prev.filter((client) => client.id !== id));
   };
 
+  const updateClientValue = (id: number, newValue: number) => {
+    setClients((prev) =>
+      prev.map((client) =>
+        client.id === id ? { ...client, value: newValue } : client,
+      ),
+    );
+  };
+
   console.log(clients);
 
   return (
@@ -43,7 +51,12 @@ function App() {
       <h1>Controle de Dívidas</h1>
 
       <CustumerForm onAddClient={addClient} />
-      <ClientList clients={clients} onMarkAsPaid={markAsPaid} onDeleteClient={deleteClient} />
+      <ClientList
+        clients={clients}
+        onMarkAsPaid={markAsPaid}
+        onDeleteClient={deleteClient}
+        onUpdateValue={updateClientValue}
+      />
     </>
   );
 }
