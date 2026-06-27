@@ -1,24 +1,28 @@
 import { useState } from "react";
-import CustumerForm from "./components/custumerForm/CustumerForm";
-import ClientList from "./components/listaClientes/ClientList";
+import type { Client } from "./types/clients";
+import type { Transaction } from "./types/clients";
+import AppRoutes from "./routes/AppRoutes";
+import { BrowserRouter } from "react-router-dom";
 import "./App.css";
-
-export type Client = {
-  id: number;
-  name: string;
-  value: number;
-  paid: boolean;
-};
 
 function App() {
   const [clients, setClients] = useState<Client[]>([]);
 
   const addClient = (name: string, value: number) => {
+    const firstTransaction: Transaction = {
+      id: Date.now(),
+      value,
+      type: "debt",
+      description: "Dívida inicial",
+      date: new Date().toISOString(),
+    };
+
     const newClient: Client = {
       id: Date.now(),
       name,
       value,
       paid: false,
+      transactions: [firstTransaction],
     };
 
     setClients((prev) => [...prev, newClient]);
@@ -58,22 +62,48 @@ function App() {
     return acc;
   }, 0);
 
+  const addTransaction = (client: Client, transaction: Transaction): Client => {
+    const updatedTransactions = [...client.transactions, transaction];
+
+    const totalDebt = updatedTransactions.reduce((total, item) => {
+      if (item.type === "debt") {
+        return total + item.value;
+      }
+
+      return total - item.value;
+    }, 0);
+
+    return {
+      ...client,
+      value: totalDebt,
+      paid: totalDebt <= 0,
+      transactions: updatedTransactions,
+    };
+  };
+
+  const handleTransaction = (clientId: number, transaction: Transaction) => {
+    setClients((prev) =>
+      prev.map((client) =>
+        client.id === clientId ? addTransaction(client, transaction) : client,
+      ),
+    );
+  };
+
   console.log(clients);
 
   return (
-    <>
-      <h1>Controle de Dívidas</h1>
-
-      <CustumerForm onAddClient={addClient} />
-      <ClientList
+    <BrowserRouter>
+      <AppRoutes
         clients={clients}
+        onAddClient={addClient}
         onMarkAsPaid={markAsPaid}
         onDeleteClient={deleteClient}
         onUpdateValue={updateClientValue}
+        onAddTransaction={handleTransaction}
+        totalPending={totalPending}
+        totalPaid={totalPaid}
       />
-      <h2>Total a receber: R$ {totalPending.toFixed(2)}</h2>
-      <h2>Total recebido: R$ {totalPaid.toFixed(2)}</h2>
-    </>
+    </BrowserRouter>
   );
 }
 

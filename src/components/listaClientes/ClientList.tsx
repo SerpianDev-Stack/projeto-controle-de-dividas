@@ -1,11 +1,14 @@
-import type { Client } from "../../App";
+import type { Client } from "../../types/clients";
 import ClientItem from "../clientItem/ClientItem";
+import type { Transaction } from "../../types/clients";
+import { Link } from "react-router-dom";
 
 type Props = {
   clients: Client[];
   onMarkAsPaid: (id: number) => void;
   onDeleteClient: (id: number) => void;
   onUpdateValue: (id: number, newValue: number) => void;
+  onAddTransaction: (clientId: number, transaction: Transaction) => void;
 };
 
 const ClientList = ({
@@ -13,6 +16,7 @@ const ClientList = ({
   onMarkAsPaid,
   onDeleteClient,
   onUpdateValue,
+  onAddTransaction,
 }: Props) => {
   const pendingClients = clients.filter((client) => !client.paid);
   const paidClients = clients.filter((client) => client.paid);
@@ -28,6 +32,7 @@ const ClientList = ({
             onMarkAsPaid={onMarkAsPaid}
             onDeleteClient={onDeleteClient}
             onUpdateValue={onUpdateValue}
+            onAddTransaction={onAddTransaction}
           />
         ))}
       </ul>
@@ -37,7 +42,8 @@ const ClientList = ({
       <ul>
         {paidClients.map((client) => (
           <li key={client.id}>
-            {client.name} - R$ {client.value}
+            <Link to={`/clientes/${client.id}`}>{client.name}</Link> - R${" "}
+            {client.value.toFixed(2)}
             <button onClick={() => onDeleteClient(client.id)}>Excluir</button>
           </li>
         ))}
