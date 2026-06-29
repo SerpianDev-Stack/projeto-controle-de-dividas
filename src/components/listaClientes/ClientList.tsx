@@ -13,9 +13,7 @@ type Props = {
 
 const ClientList = ({
   clients,
-  onMarkAsPaid,
   onDeleteClient,
-  onUpdateValue,
   onAddTransaction,
 }: Props) => {
   const pendingClients = clients.filter((client) => !client.paid);
@@ -29,9 +27,7 @@ const ClientList = ({
           <ClientItem
             key={client.id}
             client={client}
-            onMarkAsPaid={onMarkAsPaid}
             onDeleteClient={onDeleteClient}
-            onUpdateValue={onUpdateValue}
             onAddTransaction={onAddTransaction}
           />
         ))}

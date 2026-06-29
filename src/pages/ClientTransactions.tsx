@@ -31,12 +31,26 @@ const ClientTransactions = ({ clients }: Props) => {
       <h2>Últimas 10 movimentações</h2>
 
       <ul>
-        {lastTransactions.map((transaction) => (
-          <li key={transaction.id}>
-            {transaction.type === "debt" ? "Dívida" : "Pagamento"} - R${" "}
-            {transaction.value.toFixed(2)} - {transaction.description}
-          </li>
-        ))}
+        {lastTransactions.map((transaction) => {
+          const formattedDate = new Date(transaction.date).toLocaleString(
+            "pt-BR",
+            {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+            },
+          );
+
+          return (
+            <li key={transaction.id}>
+              {transaction.type === "debt" ? "Dívida" : "Pagamento"} - R${" "}
+              {transaction.value.toFixed(2)} - {transaction.description} -{" "}
+              {formattedDate}
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
