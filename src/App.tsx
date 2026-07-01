@@ -3,7 +3,6 @@ import type { Client } from "./types/clients";
 import type { Transaction } from "./types/clients";
 import AppRoutes from "./routes/AppRoutes";
 import { BrowserRouter } from "react-router-dom";
-import "./App.css";
 
 function App() {
   const [clients, setClients] = useState<Client[]>([]);

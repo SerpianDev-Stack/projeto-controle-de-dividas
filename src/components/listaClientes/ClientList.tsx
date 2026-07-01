@@ -1,5 +1,5 @@
 import type { Client } from "../../types/clients";
-import ClientItem from "../clientItem/ClientItem";
+import ClientItem from "../clientItem/clientItem";
 import type { Transaction } from "../../types/clients";
 import { Link } from "react-router-dom";
 

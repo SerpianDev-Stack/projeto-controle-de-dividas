@@ -1,6 +1,6 @@
-import CustumerForm from "../components/custumerForm/custumerForm";
-import ClientList from "../components/listaClientes/clientList";
-import type { Client, Transaction } from "../types/clients";
+import CustumerForm from "../../components/custumerForm/custumerForm";
+import ClientList from "../../components/listaClientes/clientList";
+import type { Client, Transaction } from "../../types/clients";
 
 type Props = {
   clients: Client[];
